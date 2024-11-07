@@ -27,7 +27,9 @@ related_hardware_strings = [
     "electronics accessory",
     "electrical wiring",
     "electrical supply",
-    "azure"
+    "azure",
+    "machine",
+    "hardware",
 ]
 
 related_mobile_device_strings = [
@@ -39,5 +41,9 @@ related_mobile_device_strings = [
     "portable",
     "cellular network",
     "telephone"
+]
+
+related_too_big_strings = [
+    
 ]
 
