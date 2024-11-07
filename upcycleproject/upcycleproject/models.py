@@ -10,7 +10,6 @@ class TrashType(models.TextChoices):
 
 class Category(models.TextChoices):
     HARDWARE = 'HARDWARE', 'Hardware'
-    PERIPHERAL = 'PERIPHERAL', 'Peripheral'
     BATTERY = 'BATTERY', 'Battery'
     MOBILE_DEVICE = 'MOBILE_DEVICE', 'Mobile Device'
     CHARGER = 'CHARGER', 'Charger',
@@ -19,7 +18,6 @@ class Category(models.TextChoices):
 
 CATEGORY_TRASH_TYPE_MAPPING = {
     Category.HARDWARE: [TrashType.GREEN],
-    Category.PERIPHERAL: [TrashType.GREEN],
     Category.BATTERY: [TrashType.BLUE],
     Category.MOBILE_DEVICE: [TrashType.GREEN],
     Category.CHARGER: [TrashType.BLUE],

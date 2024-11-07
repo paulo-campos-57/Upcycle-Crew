@@ -7,14 +7,11 @@ related_computer_strings = [
     "Computer keyboard",
 ]
 
-related_printer_strings = [
+related_hardware_strings = [
     "Output device",
     "Office equipment",
     "Gadget",
-    "Machine"
-]
-
-related_keyboard_strings = [
+    "Machine",
     "Peripheral",
     "Input device",
     "Computer keyboard",
