@@ -4,17 +4,44 @@ class TrashType(models.TextChoices):
     GREEN = 'GREEN', 'Green'
     WHITE = 'WHITE', 'White'
     BROWN = 'BROWN', 'Brown'
-    BLUE = 'BLUE', 'Clear'
+    BLUE = 'BLUE', 'Bluer'
+    NONE = 'NONE', 'None'
+
 
 class Category(models.TextChoices):
     KEYBOARD = 'KEYBOARD', 'Keyboard'
-    MONITOR = 'PLASTIC', 'Plastic'
-    GLASS = 'GLASS', 'Glass'
-    METAL = 'METAL', 'Metal'
+    SCREEN = 'SECREEN', 'Screen'
+    MOUSE = 'MOUSE', 'Mouse'
+    CPU = 'CPU', 'CPU'
+    GPU = 'GPU', 'GPU'
+    RAM = 'RAM', 'RAM'
+    MOTHERBOARD = 'MOTHERBOARD', 'Motherboard'
+    POWER_SUPPLY = 'POWER_SUPPLY', 'Power Supply'
+    CASE = 'CASE', 'Case'
+    COOLER = 'COOLER', 'Cooler'
+    FAN = 'FAN', 'Fan'
+    CABLE = 'CABLE', 'Cable'
+    BATTERY = 'BATERY', 'Battery'
+    CELLPHONE = 'CELLPHONE', 'Cellphone'
+    TABLET = 'TABLET', 'Tablet'
+    LAPTOP = 'LAPTOP', 'Laptop'
+    PRINTER = 'PRINTER', 'Printer'
+    SCANNER = 'SCANNER', 'Scanner'
+    ROUTER = 'ROUTER', 'Router'
+    COMPUTER_CASE = 'COMPUTER_CASE', 'Computer Case'
+    CD_DRIVE = 'CD_DRIVE', 'CD Drive'
+    HD = 'HD', 'HD'
+    CHAGER = 'CHARGER', 'Charger'
+    HEADPHONES = 'HEADPHONES', 'Headphones'
+    SPEAKER = 'SPEAKER', 'Speaker'
+    DISK_READER = 'DISK_READER', 'Disk Reader'
+    PHONE = 'PHONE', 'Phone'
+    WEIGHT_SCALE = 'WEIGHT_SCALE', 'Weight Scale'
+    POWER_BANK = 'POWER_BANK', 'Power Bank'
 
 # Mapping allowed TrashTypes to each Category
 CATEGORY_TRASH_TYPE_MAPPING = {
-    Category.PAPER: [TrashType.GREEN, TrashType.WHITE],
+    Category.KEYBOARD: [TrashType.GREEN, TrashType.WHITE],
     Category.PLASTIC: [TrashType.GREEN, TrashType.CLEAR],
     Category.GLASS: [TrashType.GREEN, TrashType.WHITE, TrashType.BROWN],
     Category.METAL: [TrashType.GREEN],
@@ -33,5 +60,5 @@ class Item(models.Model):
             raise ValueError(f"The trash type '{self.trash_type}' is not allowed for category '{self.category}'.")
         super().save(*args, **kwargs)
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.name} - {self.category} ({self.trash_type})"
