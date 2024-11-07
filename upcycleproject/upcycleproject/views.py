@@ -14,10 +14,8 @@ def receive_image(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
         if image:
-            # Lê o conteúdo da imagem como binário
             image_content = image.read()
 
-            # Passa o conteúdo binário para a função de detecção de rótulos
             return detect_labels(image_content)
         else:
             return JsonResponse({'error': 'No image provided'}, status=400)
@@ -27,11 +25,9 @@ def detect_labels(image_content):
     """Detecta rótulos na imagem usando o conteúdo binário."""
     client = vision.ImageAnnotatorClient()
     
-    # Cria um objeto de imagem com o conteúdo binário
     image = vision.Image(content=image_content)
     response = client.label_detection(image=image)
 
-    # Extrai os rótulos detectados
     labels = [{"description": label.description, "score": label.score} for label in response.label_annotations]
     
     if response.error.message:

@@ -8,69 +8,23 @@ class TrashType(models.TextChoices):
     BLUE = 'BLUE', 'Blue'
     NONE = 'NONE', 'None'
 
-
 class Category(models.TextChoices):
-    KEYBOARD = 'KEYBOARD', 'Keyboard'
-    SCREEN = 'SCREEN', 'Screen'
-    MOUSE = 'MOUSE', 'Mouse'
-    CPU = 'CPU', 'CPU'
-    GPU = 'GPU', 'GPU'
-    RAM = 'RAM', 'RAM'
-    MOTHERBOARD = 'MOTHERBOARD', 'Motherboard'
-    POWER_SUPPLY = 'POWER_SUPPLY', 'Power Supply'
-    CASE = 'CASE', 'Case'
-    COOLER = 'COOLER', 'Cooler'
-    FAN = 'FAN', 'Fan'
-    CABLE = 'CABLE', 'Cable'
+    HARDWARE = 'HARDWARE', 'Hardware'
+    PERIPHERAL = 'PERIPHERAL', 'Peripheral'
     BATTERY = 'BATTERY', 'Battery'
-    CELLPHONE = 'CELLPHONE', 'Cellphone'
-    TABLET = 'TABLET', 'Tablet'
-    LAPTOP = 'LAPTOP', 'Laptop'
-    PRINTER = 'PRINTER', 'Printer'
-    SCANNER = 'SCANNER', 'Scanner'
-    ROUTER = 'ROUTER', 'Router'
-    COMPUTER_CASE = 'COMPUTER_CASE', 'Computer Case'
-    CD_DRIVE = 'CD_DRIVE', 'CD Drive'
-    HD = 'HD', 'HD'
-    CHARGER = 'CHARGER', 'Charger'
-    HEADPHONES = 'HEADPHONES', 'Headphones'
-    SPEAKER = 'SPEAKER', 'Speaker'
-    DISK_READER = 'DISK_READER', 'Disk Reader'
-    PHONE = 'PHONE', 'Phone'
-    WEIGHT_SCALE = 'WEIGHT_SCALE', 'Weight Scale'
-    POWER_BANK = 'POWER_BANK', 'Power Bank'
-
+    MOBILE_DEVICE = 'MOBILE_DEVICE', 'Mobile Device'
+    CHARGER = 'CHARGER', 'Charger',
+    COMPUTER = 'COMPUTER', 'Computer',
+    OTHER = 'OTHER', 'Other'
 
 CATEGORY_TRASH_TYPE_MAPPING = {
-    Category.KEYBOARD: [TrashType.GREEN],
-    Category.SCREEN: [TrashType.BROWN],
-    Category.MOUSE: [TrashType.GREEN],
-    Category.CPU: [TrashType.GREEN],
-    Category.GPU: [TrashType.GREEN],
-    Category.RAM: [TrashType.GREEN],
-    Category.MOTHERBOARD: [TrashType.GREEN],
-    Category.POWER_SUPPLY: [TrashType.GREEN],
-    Category.CASE: [TrashType.BLUE],
-    Category.COOLER: [TrashType.BLUE],
-    Category.FAN: [TrashType.GREEN],
-    Category.CABLE: [TrashType.BLUE],
+    Category.HARDWARE: [TrashType.GREEN],
+    Category.PERIPHERAL: [TrashType.GREEN],
     Category.BATTERY: [TrashType.BLUE],
-    Category.CELLPHONE: [TrashType.GREEN],
-    Category.TABLET: [TrashType.GREEN],
-    Category.LAPTOP: [TrashType.GREEN],
-    Category.PRINTER: [TrashType.GREEN],
-    Category.SCANNER: [TrashType.GREEN],
-    Category.ROUTER: [TrashType.GREEN],
-    Category.COMPUTER_CASE: [TrashType.GREEN],
-    Category.CD_DRIVE: [TrashType.BROWN],
-    Category.HD: [TrashType.GREEN],
+    Category.MOBILE_DEVICE: [TrashType.GREEN],
     Category.CHARGER: [TrashType.BLUE],
-    Category.HEADPHONES: [TrashType.BROWN],
-    Category.SPEAKER: [TrashType.BROWN],
-    Category.DISK_READER: [TrashType.BROWN],
-    Category.PHONE: [TrashType.GREEN],
-    Category.WEIGHT_SCALE: [TrashType.WHITE],
-    Category.POWER_BANK: [TrashType.GREEN],
+    Category.COMPUTER: [TrashType.GREEN],
+    Category.OTHER: [TrashType.NONE],
 }
 
 class Size(models.TextChoices):
