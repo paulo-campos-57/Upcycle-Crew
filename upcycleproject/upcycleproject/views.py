@@ -8,6 +8,7 @@ from django.conf import settings
 from google.cloud import vision
 from upcycleproject.models import Client
 from upcycleproject.models import ItemThrown, Category
+from django.core.mail import EmailMessage, get_connection
 
 credentials_path = os.path.join(settings.BASE_DIR, 'upcycleproject', 'credentials', 'upcyclecrewconfig.json')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
@@ -21,7 +22,8 @@ related_hardware_strings = [
     "output device", "office equipment", "gadget", "machine", "peripheral", 
     "input device", "computer keyboard", "office equipment", "keyboard", "cable", 
     "wire", "electric blue", "electronics accessory", "electrical wiring", 
-    "electrical supply", "azure", "machine", "hardware, fiber"
+    "electrical supply", "azure", "machine", "hardware, fiber", "computer hardware", "electronic engineering",
+
 ]
 
 related_mobile_device_strings = [
@@ -39,34 +41,33 @@ def receive_image(request):
                 client = Client.objects.get(cpf=cpf)
                 image_content = image.read()
                 
-                # Receive the response from the detect_labels function
                 labels_response = detect_labels(image_content)
                 
-                # Initialize found_type as "NONE"
                 found_type = "NONE"
 
-                # Iterate over each label to find a match in any list
                 for label in labels_response.get('labels', []):
                     description = label.get('description', '').lower()
 
-                    # Check if the description matches any list
                     if description in [item.lower() for item in related_computer_strings]:
                         found_type = "computer"
+                        livelo_update_points = 20
                         break
                     elif description in [item.lower() for item in related_hardware_strings]:
                         found_type = "hardware"
+                        livelo_update_points = 30
                         break
                     elif description in [item.lower() for item in related_mobile_device_strings]:
                         found_type = "mobile_device"
+                        livelo_update_points = 10
                         break
 
-                # Just print the found type
                 print(found_type)
                 print(cpf)
                 item = ItemThrown.objects.create(category=found_type, client=client)
                 item.save()
-
-                # Return the labels_response as requested
+                client.livelo_points += livelo_update_points
+                client.save()
+                send_email(item.client.email)
                 return JsonResponse(labels_response)
             except Client.DoesNotExist:
                 return JsonResponse({'error': 'Client not found'}, status=404)
@@ -91,7 +92,6 @@ def detect_labels(image_content):
 
     return {'labels': labels}
 
-@csrf_exempt
 def create_user(request):
     if request.method == 'POST':
         data = json.loads(request.body)  
@@ -104,4 +104,24 @@ def create_user(request):
         client = Client.objects.create(cpf=cpf, email=email)
         
         return JsonResponse({'user': {'cpf': client.cpf, 'email': client.email}})
+    
+def send_email(email):
+    subject = "Hello from Django SMTP"
+    recipient_list = [email]
+    from_email = "onboarding@resend.dev"
+    message = f"<strong>Parabéns pela ajuda! Sua colaboração cria um mundo melhor! Você acaba de receber uma recompensa de</strong>"
+
+    email = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email=from_email,
+        to=recipient_list,
+    )
+    email.content_subtype = "html" 
+    
+    try:
+        print("cai aqui")
+        email.send()  
+    except Exception as e:
+        print("Erro no envio de e-mail:", str(e))
     

@@ -28,11 +28,15 @@ class ItemThrown(models.Model):
 
     def save(self, *args, **kwargs):
         points = LIVELO_POINTS_MAPPING.get(self.category, 0)
-        Client.objects.filter(pk=self.client.pk).update(livelo_points=F('livelo_points') + points)
+        
+        self.client.livelo_points += points
+        self.client.save()
+        
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.category} thrown by {self.client}"
+
 
 class Unit(models.Model):
     city = models.CharField(max_length=255)
