@@ -128,12 +128,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 env = environ.Env(
-    DEBUG=(bool, False)
+    
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-DEBUG = env('DEBUG')
 RESEND_API_KEY = env('RESEND_API_KEY')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
 
