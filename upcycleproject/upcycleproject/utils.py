@@ -1,29 +1,43 @@
 related_computer_strings = [
     'computer',
+    'netbook',
+    'notebook',
+    'laptop',
     'personal computer',
-    "Computer monitor",
+    "computer monitor",
     "Peripheral",
     "Output device",
-    "Computer keyboard",
+    "monitor",
+    "computer screen"
 ]
 
 related_hardware_strings = [
-    "Output device",
-    "Office equipment",
-    "Gadget",
-    "Machine",
-    "Peripheral",
-    "Input device",
-    "Computer keyboard",
-    "Office equipment",
-    "keyboard"
+    "output device",
+    "office equipment",
+    "gadget",
+    "machine",
+    "peripheral",
+    "input device",
+    "computer keyboard",
+    "office equipment",
+    "keyboard",
+    "cable",
+    "wire",
+    "electric blue",
+    "electronics accessory",
+    "electrical wiring",
+    "electrical supply",
+    "azure"
 ]
 
-related_phone_strings = [
-    "Mobile phone",
-    "Communication Device",
-    "Telephony",
-    "Mobile device",
-    "Gadget",
-    "Hand"
+related_mobile_device_strings = [
+    "mobile phone",
+    "communication Device",
+    "telephony",
+    "mobile device",
+    "portable communications device",
+    "portable",
+    "cellular network",
+    "telephone"
 ]
+

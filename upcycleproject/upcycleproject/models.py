@@ -11,7 +11,7 @@ class TrashType(models.TextChoices):
 class Category(models.TextChoices):
     HARDWARE = 'HARDWARE', 'Hardware'
     BATTERY = 'BATTERY', 'Battery'
-    MOBILE_DEVICE = 'MOBILE_DEVICE', 'Mobile Device'
+    MOBILE_DEVICE = '   MOBILE_DEVICE', 'Mobile Device'
     CHARGER = 'CHARGER', 'Charger',
     COMPUTER = 'COMPUTER', 'Computer',
     OTHER = 'OTHER', 'Other'
