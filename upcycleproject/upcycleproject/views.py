@@ -67,7 +67,7 @@ def receive_image(request):
                 item.save()
                 client.livelo_points += livelo_update_points
                 client.save()
-                send_email(item.client.email)
+                send_email(item.client.email, livelo_update_points)
                 return JsonResponse(labels_response)
             except Client.DoesNotExist:
                 return JsonResponse({'error': 'Client not found'}, status=404)
@@ -105,11 +105,11 @@ def create_user(request):
         
         return JsonResponse({'user': {'cpf': client.cpf, 'email': client.email}})
     
-def send_email(email):
+def send_email(email, item):
     subject = "Hello from Django SMTP"
     recipient_list = [email]
     from_email = "onboarding@resend.dev"
-    message = f"<strong>Parabéns pela ajuda! Sua colaboração cria um mundo melhor! Você acaba de receber uma recompensa de</strong>"
+    message = f"<strong>Parabéns pela ajuda! Sua colaboração cria um mundo melhor! Você acaba de receber uma recompensa de {item} pontos!</strong>"
 
     email = EmailMessage(
         subject=subject,
@@ -124,4 +124,5 @@ def send_email(email):
         email.send()  
     except Exception as e:
         print("Erro no envio de e-mail:", str(e))
+
     
