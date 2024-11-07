@@ -5,7 +5,7 @@ function Footer() {
     const navigate = useNavigate();
 
     const handleUserClick = () => {
-        navigate('/send');
+        navigate('/identifier');
     }
 
     return (

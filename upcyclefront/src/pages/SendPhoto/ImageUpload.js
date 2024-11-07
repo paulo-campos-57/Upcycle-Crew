@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Footer from '../../components/Footer';
 
 function ImageUpload() {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -48,7 +47,6 @@ function ImageUpload() {
                 <button type="submit">Upload</button>
             </form>
             {responseMessage && <p>{responseMessage}</p>}
-            <Footer />
         </div>
     );
 }
