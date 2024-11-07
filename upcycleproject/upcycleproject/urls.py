@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from upcycleproject.views import receive_image
+from upcycleproject.views import create_user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('receive_image/', receive_image),
+    path('create_user/', create_user),
 ]
