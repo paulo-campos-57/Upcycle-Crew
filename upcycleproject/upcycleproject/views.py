@@ -139,16 +139,21 @@ def send_email(email, points):
 def create_unit(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        city = data.get('city')
-        neighbourhood = data.get('neighbourhood')
-        street = data.get('street')
-        number = data.get('number')
-        postal_code = data.get('postal_code')
-        weight = 100
-
-        if not city or not neighbourhood or not street or not number or not postal_code or not weight:
-            return JsonResponse({'error': 'Todos os campos são obrigatórios.'}, status=400)
-
-        unit = Unit.objects.create(city=city, neighbourhood=neighbourhood, street=street, number=number, postal_code=postal_code, weight=weight)
         
-        return JsonResponse({'unit': {'city': unit.city, 'neighbourhood': unit.neighbourhood, 'street': unit.street, 'number': unit.number, 'postal_code': unit.postal_code, 'weight': unit.weight}})
+        # Create a new Unit object with the provided data
+        unit = Unit.objects.create(
+            city=data.get('city'),
+            neighborhood=data.get('neighborhood'),
+            street=data.get('street'),
+            number=data.get('number'),
+            postal_code=data.get('postal_code')
+        )
+        
+        return JsonResponse({
+            'id': unit.id,  
+            'city': unit.city,
+            'neighborhood': unit.neighbourhood,
+            'street': unit.street,
+            'number': unit.number,
+            'postal_code': unit.postal_code
+        }, status=201)

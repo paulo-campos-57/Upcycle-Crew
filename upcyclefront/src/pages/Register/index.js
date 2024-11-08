@@ -8,7 +8,6 @@ function Register() {
     const [street, setStreet] = useState('');
     const [number, setNumber] = useState('');
     const [postalCode, setPostalCode] = useState('');
-
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -16,10 +15,10 @@ function Register() {
 
         const formData = {
             city,
-            neighbourhood: neighborhood,  
+            neighborhood,
             street,
             number,
-            postal_code: postalCode,       
+            postal_code: postalCode,
         };
 
         try {
@@ -34,9 +33,14 @@ function Register() {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Response:', data);
-                navigate('/begin');  // Redirect after successful submission
+
+                // Store the `id` in localStorage
+                localStorage.setItem('unitId', data.id);
+
+                // Redirect to "/camera" after saving `id` to localStorage
+                navigate('/camera');
             } else {
-                console.error('Error:', response.statusText); 
+                console.error('Error:', response.statusText);
             }
         } catch (error) {
             console.error('Fetch error:', error);
@@ -47,10 +51,10 @@ function Register() {
         <div className={styles['register-container']}>
             <div className={styles['register-body']}>
                 <img className={styles['register-logo']} src='/images/logo.svg' alt='Logo do Banco do Brasil' />
-                <h1 className="text-3xl mt-6 text-blue-600">
+                <h1 className="text-4xl mt-6 text-blue-600">
                     Compartimento de reciclagem de resíduos eletrônicos
                 </h1>
-                <form className="flex flex-col gap-4 mt-8 w-5/6" onSubmit={handleSubmit}>
+                <form className="flex flex-col gap-4 mt-12 w-5/6" onSubmit={handleSubmit}>
                     <div className={styles['form-input']}>
                         <label>Cidade</label>
                         <input
