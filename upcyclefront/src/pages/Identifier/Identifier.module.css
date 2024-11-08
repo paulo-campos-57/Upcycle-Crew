@@ -1,0 +1,32 @@
+.identifier-body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 38px;
+}
+
+.question {
+    color: #0038A8;
+    font-size: 160px;
+    line-height: 1;
+    margin-bottom: 0;
+}
+
+.subtitle {
+    color: #0038A8;
+    font-size: 50px;
+    margin-top: -20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
