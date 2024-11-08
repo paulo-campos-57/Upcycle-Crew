@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path
 from upcycleproject.views import receive_image
 from upcycleproject.views import create_user
+from upcycleproject.views import create_unit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('receive_image/', receive_image),
+    path('receive_image/<int:unit_id>/', receive_image),
     path('create_user/', create_user),
+    path('create_unit/', create_unit),
 ]

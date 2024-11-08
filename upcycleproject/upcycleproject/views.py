@@ -7,8 +7,9 @@ import json
 from django.conf import settings
 from google.cloud import vision
 from upcycleproject.models import Client
-from upcycleproject.models import ItemThrown, Category
+from upcycleproject.models import ItemThrown, Category, Unit
 from django.core.mail import EmailMessage, get_connection
+from django.core.mail import send_mail
 
 credentials_path = os.path.join(settings.BASE_DIR, 'upcycleproject', 'credentials', 'upcyclecrewconfig.json')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
@@ -32,18 +33,19 @@ related_mobile_device_strings = [
 ]
 
 @csrf_exempt
-def receive_image(request):
+def receive_image(request, unit_id):
     if request.method == 'POST':
         image = request.FILES.get('image')
         cpf = request.POST.get('cpf') 
         if image and cpf:
             try:
                 client = Client.objects.get(cpf=cpf)
+                unit = Unit.objects.get(id=unit_id)
+
                 image_content = image.read()
-                
                 labels_response = detect_labels(image_content)
-                
                 found_type = "NONE"
+                livelo_update_points = 0  # Initialize to 0
 
                 for label in labels_response.get('labels', []):
                     description = label.get('description', '').lower()
@@ -61,16 +63,13 @@ def receive_image(request):
                         livelo_update_points = 10
                         break
 
-                print(found_type)
-                print(cpf)
-                item = ItemThrown.objects.create(category=found_type, client=client)
-                item.save()
+                item = ItemThrown.objects.create(category=found_type, client=client, unit=unit)
                 client.livelo_points += livelo_update_points
                 client.save()
-                send_email(item.client.email, livelo_update_points)
+                send_email(client.email, livelo_update_points)
                 return JsonResponse(labels_response)
-            except Client.DoesNotExist:
-                return JsonResponse({'error': 'Client not found'}, status=404)
+            except (Client.DoesNotExist, Unit.DoesNotExist):
+                return JsonResponse({'error': 'Client or Unit not found'}, status=404)
         else:
             return JsonResponse({'error': 'Image or CPF not provided'}, status=400)
    
@@ -92,6 +91,7 @@ def detect_labels(image_content):
 
     return {'labels': labels}
 
+@csrf_exempt
 def create_user(request):
     if request.method == 'POST':
         data = json.loads(request.body)  
@@ -105,24 +105,41 @@ def create_user(request):
         
         return JsonResponse({'user': {'cpf': client.cpf, 'email': client.email}})
     
-def send_email(email, item):
-    subject = "Hello from Django SMTP"
-    recipient_list = [email]
-    from_email = "onboarding@resend.dev"
-    message = f"<strong>Parabéns pela ajuda! Sua colaboração cria um mundo melhor! Você acaba de receber uma recompensa de {item} pontos!</strong>"
+from django.core.mail import send_mail
+from django.conf import settings
 
-    email = EmailMessage(
-        subject=subject,
-        body=message,
-        from_email=from_email,
-        to=recipient_list,
-    )
-    email.content_subtype = "html" 
-    
+def send_email(email, points):
+    subject = "Parabéns pela sua contribuição!"
+    recipient_list = [email]
+    from_email = settings.EMAIL_HOST_USER  # Ensure this email is authorized to send emails via your SMTP server
+    message = f"<strong>Parabéns pela ajuda! Sua colaboração cria um mundo melhor! Você acaba de receber uma recompensa de {points} pontos!</strong>"
+
     try:
-        print("cai aqui")
-        email.send()  
+        send_mail(
+            subject=subject,
+            message='',  # Plain text message (can be empty if only sending HTML)
+            from_email=from_email,
+            recipient_list=recipient_list,
+            fail_silently=False,
+            html_message=message
+        )
     except Exception as e:
         print("Erro no envio de e-mail:", str(e))
 
-    
+@csrf_exempt    
+def create_unit(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        city = data.get('city')
+        neighbourhood = data.get('neighbourhood')
+        street = data.get('street')
+        number = data.get('number')
+        postal_code = data.get('postal_code')
+        weight = data.get('weight')
+
+        if not city or not neighbourhood or not street or not number or not postal_code or not weight:
+            return JsonResponse({'error': 'Todos os campos são obrigatórios.'}, status=400)
+
+        unit = Unit.objects.create(city=city, neighbourhood=neighbourhood, street=street, number=number, postal_code=postal_code, weight=weight)
+        
+        return JsonResponse({'unit': {'city': unit.city, 'neighbourhood': unit.neighbourhood, 'street': unit.street, 'number': unit.number, 'postal_code': unit.postal_code, 'weight': unit.weight}})

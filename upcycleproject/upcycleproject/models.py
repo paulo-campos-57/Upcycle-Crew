@@ -20,11 +20,21 @@ class Client(models.Model):
 
     def __str__(self):
         return self.cpf
+    
+class Unit(models.Model):
+    city = models.CharField(max_length=255)
+    neighbourhood = models.CharField(max_length=255)
+    street = models.CharField(max_length=255)
+    number = models.IntegerField()
+    postal_code = models.CharField(max_length=8)
+    weight = models.FloatField(default=0)
+
 
 class ItemThrown(models.Model):
     category = models.CharField(max_length=50, choices=Category.choices)
     date_of_item_thrown = models.DateTimeField(auto_now_add=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, default = None)
 
     def save(self, *args, **kwargs):
         points = LIVELO_POINTS_MAPPING.get(self.category, 0)
@@ -38,9 +48,3 @@ class ItemThrown(models.Model):
         return f"{self.category} thrown by {self.client}"
 
 
-class Unit(models.Model):
-    city = models.CharField(max_length=255)
-    neighbourhood = models.CharField(max_length=255)
-    street = models.CharField(max_length=255)
-    number = models.IntegerField()
-    postal_code = models.CharField(max_length=8)

@@ -137,9 +137,9 @@ RESEND_API_KEY = env('RESEND_API_KEY')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.resend.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'resend'
-EMAIL_HOST_PASSWORD = os.getenv('RESEND_API_KEY')  # Ensure this environment variable is set
+EMAIL_HOST_USER = 'capv2004@gmail.com'
+EMAIL_HOST_PASSWORD = 'qxeqnryfaqtstkjb'
 EMAIL_USE_TLS = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
