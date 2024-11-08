@@ -10,6 +10,8 @@ from upcycleproject.models import Client
 from upcycleproject.models import ItemThrown, Category, Unit
 from django.core.mail import EmailMessage, get_connection
 from django.core.mail import send_mail
+import re
+
 
 credentials_path = os.path.join(settings.BASE_DIR, 'upcycleproject', 'credentials', 'upcyclecrewconfig.json')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
@@ -34,22 +36,32 @@ related_mobile_device_strings = [
 
 @csrf_exempt
 def receive_image(request, unit_id):
+    print('eu caí na função')
     if request.method == 'POST':
         image = request.FILES.get('image')
         cpf = request.POST.get('cpf') 
         print("Content-Type:", request.META.get('CONTENT_TYPE'))
         print("POST data:", request.POST)
         print("FILES data:", request.FILES)
+        print('recebi esse unit_id:', unit_id)
 
         if image and cpf:
+            print('ola')
+            cpf = re.sub(r'\D', '', cpf)
             try:
+                print('passei de bloco 0')
                 client = Client.objects.get(cpf=cpf)
+                print('passei de bloco 0.5')
+                unit_id = int(unit_id)
                 unit = Unit.objects.get(id=unit_id)
+                print('passei de bloco 1')
 
                 image_content = image.read()
                 labels_response = detect_labels(image_content)
                 found_type = "NONE"
                 livelo_update_points = 0
+                print('passei de bloco 2')
+
 
                 for label in labels_response.get('labels', []):
                     description = label.get('description', '').lower()
@@ -67,9 +79,9 @@ def receive_image(request, unit_id):
                         livelo_update_points = 10
                         break
                 
-                if found_type == "NONE":
-                    print('cai aqui')
-                    return JsonResponse({'error': 'Item is not an electronic'}, status=404)
+                # if found_type == "NONE":
+                #     print('cai aqui')
+                #     return JsonResponse({'error': 'Item is not an electronic'}, status=404)
 
                 if unit.weight < livelo_update_points:
                     return JsonResponse({'error': 'Unit does not have enough space'}, status=400)
@@ -78,6 +90,7 @@ def receive_image(request, unit_id):
                 item_weight = livelo_update_points
                 ItemThrown.objects.create(category=found_type, client=client, unit=unit)
                 unit.weight -= item_weight
+                print('passei de bloco 3')
                 unit.save()
                 client.livelo_points += livelo_update_points
                 client.save()
@@ -155,11 +168,11 @@ def create_unit(request):
             weight=100
         )
         
-        return JsonResponse({
-            'id': unit.id,  
+        return JsonResponse({  
             'city': unit.city,
             'neighborhood': unit.neighbourhood,
             'street': unit.street,
             'number': unit.number,
+            'id': unit.id,
             'postal_code': unit.postal_code
         }, status=201)
