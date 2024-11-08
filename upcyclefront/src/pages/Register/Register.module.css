@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
     overflow: hidden;
 }
@@ -9,7 +13,7 @@ body {
 
 .register-body {
     background-color: #FFF;
-    padding: 78px 64px;
+    padding: 45px 64px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -20,19 +24,9 @@ body {
     flex: 1;
     overflow: hidden;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.register-image img {
-    width: auto;
-    height: 100%;
-    width: 50%;
-    object-fit: contain;
-    object-position: right;
-    position:absolute;
-    right:0
+    align-items: end;
+    justify-content: end;
+    width: 33%;
 }
 
 .register-logo {
@@ -53,6 +47,7 @@ body {
     flex-direction: column;
     gap: 20px;
     margin-top: 20px;
+    width: 50%;
 }
 
 .form-input {

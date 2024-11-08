@@ -135,7 +135,7 @@ def create_unit(request):
         street = data.get('street')
         number = data.get('number')
         postal_code = data.get('postal_code')
-        weight = data.get('weight')
+        weight = 100
 
         if not city or not neighbourhood or not street or not number or not postal_code or not weight:
             return JsonResponse({'error': 'Todos os campos são obrigatórios.'}, status=400)
