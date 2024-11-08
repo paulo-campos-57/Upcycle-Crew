@@ -14,6 +14,7 @@ import re
 
 
 credentials_path = os.path.join(settings.BASE_DIR, 'upcycleproject', 'credentials', 'upcyclecrewconfig.json')
+img_path = os.path.join(settings.BASE_DIR, 'upcycleproject', 'static', 'upcycleproject', 'img')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 related_computer_strings = [
@@ -79,11 +80,12 @@ def receive_image(request, unit_id):
                         livelo_update_points = 10
                         break
                 
-                # if found_type == "NONE":
-                #     print('cai aqui')
-                #     return JsonResponse({'error': 'Item is not an electronic'}, status=404)
+                if found_type == "NONE":
+                    print('cai aqui')
+                    return JsonResponse({'error': 'Item is not an electronic'}, status=404)
 
                 if unit.weight < livelo_update_points:
+                    send_email_bb(client.email, livelo_update_points)
                     return JsonResponse({'error': 'Unit does not have enough space'}, status=400)
                 
                 # Processar o item
@@ -95,7 +97,8 @@ def receive_image(request, unit_id):
                 client.livelo_points += livelo_update_points
                 client.save()
                 send_email(client.email, livelo_update_points)
-                return JsonResponse(labels_response)
+                
+                return JsonResponse({'found_type': found_type})
             except (Client.DoesNotExist, Unit.DoesNotExist):
                 return JsonResponse({'error': 'Client or Unit not found'}, status=404)
         else:
@@ -135,16 +138,94 @@ def create_user(request):
         return JsonResponse({'user': {'cpf': client.cpf, 'email': client.email}})
     
 
-def send_email(email, points):
-    subject = "Parabéns pela sua contribuição!"
+def send_email_bb(email):
+    subject = "Lixeira Atingiu a Capacidade Máxima"
     recipient_list = [email]
-    from_email = settings.EMAIL_HOST_USER  # Ensure this email is authorized to send emails via your SMTP server
-    message = f"<strong>Parabéns pela ajuda! Sua colaboração cria um mundo melhor! Você acaba de receber uma recompensa de {points} pontos!</strong>"
+    from_email = settings.EMAIL_HOST_USER  # Certifique-se de que este email está autorizado a enviar emails pelo seu servidor SMTP
+
+    # HTML do email, com URL pública para a logo
+    message = """
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Email de Notificação</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f4;
+        }
+        .email-container {
+          width: 100%;
+          max-width: 600px;
+          background-color: #ffffff;
+          border: 1px solid #ddd;
+          margin: auto;
+        }
+        .header {
+          background-color: #1653fc;
+          color: #FFDD00;
+          padding: 20px;
+          text-align: center;
+        }
+        .content {
+          padding: 20px;
+          text-align: left;
+        }
+        .highlight {
+          background-color: #FFDD00;
+          color: #1653fc;
+          padding: 15px;
+          margin: 20px 0;
+          text-align: center;
+          font-weight: bold;
+        }
+        .footer {
+          background-color: #616264;
+          color: #ffffff;
+          padding: 10px;
+          text-align: center;
+          font-size: 12px;
+        }
+      </style>
+    </head>
+    <body>
+      <table class="email-container" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="header">
+            <center><img src="Upcycle-Crew\\upcycleproject\\upcycleproject\\static\\logo_bb.jpeg" alt="Logo da Empresa" width="50" style="display: block; border-radius: 5px;"></center>
+            <h2 style="margin: 10px 0;">Lixeira Atingiu a Capacidade Máxima</h2>
+          </td>
+        </tr>
+        <tr>
+          <td class="content">
+            <h1 style="font-size: 24px; color: #1653fc; margin-bottom: 10px;">Atenção: Coleta Necessária</h1>
+            <p>Olá,</p>
+            <p>Informamos que a unidade de descarte do ponto de coleta <strong>Ponto de Coleta X</strong> atingiu a capacidade máxima de <strong>100kg</strong> de descartes eletrônicos. Por favor, programe o envio de um caminhão para recolher o material.</p>
+            <div class="highlight">
+              Lixeira cheia com 100kg - Coleta necessária!
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="footer">
+            <p>Empresa de Gestão de Resíduos Eletrônicos</p>
+            <p>Endereço: Rua Exemplo, 123, Cidade</p>
+            <p>Telefone: (11) 1234-5678</p>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+    """
 
     try:
         send_mail(
             subject=subject,
-            message='',  # Plain text message (can be empty if only sending HTML)
+            message='',  # Mensagem em texto plano (pode ser vazia se estiver enviando apenas HTML)
             from_email=from_email,
             recipient_list=recipient_list,
             fail_silently=False,
@@ -152,6 +233,76 @@ def send_email(email, points):
         )
     except Exception as e:
         print("Erro no envio de e-mail:", str(e))
+
+
+def send_email(email, points):
+    subject = "Obrigado por descartar com consciência!"
+    recipient_list = [email]
+    from_email = settings.EMAIL_HOST_USER  # Certifique-se de que este email está autorizado a enviar emails pelo seu servidor SMTP
+
+    # HTML do email, com URL pública para a logo
+    message = f"""
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Email de Notificação</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 0; padding: 0;">
+        <tr>
+          <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: auto;">
+              
+              <!-- Header Section -->
+              <tr>
+                <td align="center" style="background-color: #1653fc; color: #FFDD00; padding: 20px; text-align: center;">
+                  <img src="Upcycle-Crew\\upcycleproject\\upcycleproject\\static\\logo_bb.jpeg" alt="Imagem de Cabeçalho" class="imagem-ajustada" style="width: 50px; border-radius: 5px;">
+                  <h2 style="margin: 10px 0; font-size: 24px; color: #FFDD00;">Obrigado por descartar com consciência!</h2>
+                </td>
+              </tr>
+              
+              <!-- Content Section -->
+              <tr>
+                <td style="padding: 20px; text-align: center;">
+                  <h1 style="font-size: 24px; color: #1653fc; margin: 0 0 10px 0;">Parabéns por contribuir com um futuro mais sustentável!</h1>
+                  <p style="font-size: 18px; color: #666666; line-height: 1.6; margin: 5px 0;">Por sua atitude, queremos te recompensar</p>
+                  <div style="color: #1653fc; background-color: #FFDD00; padding: 15px; margin: 20px 0; border-radius: 5px; text-align: center; font-size: 20px; font-weight: bold;">
+                    Você acaba de ganhar {points} pontos Livelo!
+                  </div>
+                </td>
+              </tr>
+              
+              <!-- Footer Section -->
+              <tr>
+                <td align="center" style="background-color: #616264; color: #ffffff; padding: 10px; text-align: center; font-size: 12px;">
+                  <p style="margin: 0;">Empresa de Gestão de Resíduos Eletrônicos</p>
+                  <p style="margin: 0;">Endereço: Rua Exemplo, 123, Cidade</p>
+                  <p style="margin: 0;">Telefone: (11) 1234-5678</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+    """
+
+    try:
+        send_mail(
+            subject=subject,
+            message='',  # Mensagem em texto plano (pode ser vazia se estiver enviando apenas HTML)
+            from_email=from_email,
+            recipient_list=recipient_list,
+            fail_silently=False,
+            html_message=message
+        )
+    except Exception as e:
+        print("Erro no envio de e-mail:", str(e))
+
+
 
 @csrf_exempt    
 def create_unit(request):

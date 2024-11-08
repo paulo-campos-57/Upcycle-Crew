@@ -62,7 +62,7 @@ export default function Component() {
             return;
           }
 
-          const url = `http://localhost:8000/receive_image/5/`;
+          const url = `http://localhost:8000/receive_image/${unitId}/`;
 
           const formData = new FormData();
           formData.append('cpf', cpf);
