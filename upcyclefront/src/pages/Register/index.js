@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 
 function Register() {
@@ -7,6 +8,8 @@ function Register() {
     const [street, setStreet] = useState('');
     const [number, setNumber] = useState('');
     const [postalCode, setPostalCode] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,6 +34,7 @@ function Register() {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Response:', data);
+                navigate('/begin');  // Redirect after successful submission
             } else {
                 console.error('Error:', response.statusText); 
             }
@@ -43,10 +47,10 @@ function Register() {
         <div className={styles['register-container']}>
             <div className={styles['register-body']}>
                 <img className={styles['register-logo']} src='/images/logo.svg' alt='Logo do Banco do Brasil' />
-                <h1 className="text-4xl mt-6 text-blue-600">
+                <h1 className="text-3xl mt-6 text-blue-600">
                     Compartimento de reciclagem de resíduos eletrônicos
                 </h1>
-                <form className="flex flex-col gap-4 mt-12 w-5/6" onSubmit={handleSubmit}>
+                <form className="flex flex-col gap-4 mt-8 w-5/6" onSubmit={handleSubmit}>
                     <div className={styles['form-input']}>
                         <label>Cidade</label>
                         <input

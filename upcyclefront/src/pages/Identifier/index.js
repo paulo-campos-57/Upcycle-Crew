@@ -17,7 +17,7 @@ function Identifier() {
                         <strong>Bem vindo</strong> ao descarte eletrônico do BB!
                     </p>
                     <p className={styles.question}>
-                        Você gostria de se identificar?
+                        Você gostaria de se identificar?
                     </p>
                     <div className={styles['button-container']}>
                         <button className={styles['yes-button']} onClick={() => handleUserClick()}>Sim</button>

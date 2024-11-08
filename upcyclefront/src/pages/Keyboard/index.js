@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 
 function Keyboard() {
     const [cpf, setCpf] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         localStorage.setItem('cpf', formatCpf(cpf));
@@ -15,6 +18,14 @@ function Keyboard() {
 
     const handleDelete = () => {
         setCpf(prevCpf => prevCpf.slice(0, -1));
+    };
+
+    const handleConfirm = () => {
+        if (cpfValidator.isValid(cpf)) {
+            navigate('/camera'); // Navigate to the /camera route on valid CPF
+        } else {
+            alert('CPF inválido. Por favor, verifique o número digitado.');
+        }
     };
 
     const formatCpf = (value) => {
@@ -39,7 +50,7 @@ function Keyboard() {
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((number, index) => (
                         <button
                             key={index}
-                            className={`w-full h-full bg-[#0047B6] rounded-lg text-2xl font-semibold`}
+                            className='w-full h-full bg-[#0047B6] rounded-lg text-2xl font-semibold'
                             onClick={() => handleNumberClick(number)}
                             style={{
                                 transition: 'transform 0.2s ease',
@@ -51,17 +62,30 @@ function Keyboard() {
                         </button>
                     ))}
                     {cpf.length > 0 && (
-                        <button
-                            className='w-full h-full bg-red-600 rounded-lg text-2xl font-semibold'
-                            onClick={handleDelete}
-                            style={{
-                                transition: 'transform 0.2s ease',
-                            }}
-                            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                        >
-                            Apagar
-                        </button>
+                        <>
+                            <button
+                                className='w-full h-full bg-red-600 rounded-lg text-2xl font-semibold'
+                                onClick={handleDelete}
+                                style={{
+                                    transition: 'transform 0.2s ease',
+                                }}
+                                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+                                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                            >
+                                Apagar
+                            </button>
+                            <button
+                                className='w-full h-full bg-green-600 rounded-lg text-2xl font-semibold'
+                                onClick={handleConfirm}
+                                style={{
+                                    transition: 'transform 0.2s ease',
+                                }}
+                                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+                                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                            >
+                                Confirmar
+                            </button>
+                        </>
                     )}
                 </div>
             </div>

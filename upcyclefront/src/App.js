@@ -10,9 +10,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/register' element={<Register />} />
+        <Route path='/' element={<Register />} />
+        <Route path='/begin' element={<Home />} />
         <Route path='/identifier' element={<Identifier />} />
+        <Route path='/insert-cpf' element={<Keyboard />}/>
         <Route path='/camera' element={<Camera />} />
         <Route path='/keyboard' element={<Keyboard />} />
       </Routes>
