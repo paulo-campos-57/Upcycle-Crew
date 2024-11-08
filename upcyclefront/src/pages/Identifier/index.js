@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import styles from './Identifier.module.css';
 
 function Identifier() {
+    const navigate = useNavigate();
+
+    const handleUserClick = () => {
+        navigate('/keyboard')
+    }
+
     return (
         <>
             <div className={styles['identifier-container']}>
@@ -13,7 +20,7 @@ function Identifier() {
                         Você gostria de se identificar?
                     </p>
                     <div className={styles['button-container']}>
-                        <button className={styles['yes-button']}>Sim</button>
+                        <button className={styles['yes-button']} onClick={() => handleUserClick()}>Sim</button>
                         <button className={styles['no-button']}>Não</button>
                     </div>
                 </div>

@@ -1,0 +1,84 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    height: 100vh;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.title {
+    color: #0047B6;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.input {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f5f6fa;
+    text-align: center;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.button {
+    padding: 25px 0;
+    font-size: 1.5rem;
+    font-weight: 900;
+    border: none;
+    border-radius: 8px;
+    background-color: #0047B6;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    aspect-ratio: 16/9;
+}
+
+.button:hover {
+    background-color: #003585;
+}
+
+.button:nth-last-child(1) {
+    grid-column: 2;
+}
+
+.button-zero {
+    grid-column: 1 / 2;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+    padding: 20px;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 5px;
+}
+
+.deleteButton:hover {
+    background-color: #bb2d3b;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .button {
+        padding: 20px 0;
+    }
+}
+
+@media (min-width: 769px) {
+    .button {
+        min-height: 80px;
+    }
+}

@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ImageUpload from './pages/SendPhoto/ImageUpload';
 import Home from './pages/Home';
 import Identifier from './pages/Identifier';
 import Register from './pages/Register';
 import Camera from './pages/Camera/index.tsx';
+import Keyboard from './pages/Keyboard/index.js';
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/register' element={<Register />} />
         <Route path='/identifier' element={<Identifier />} />
-        <Route path='/send' element={<ImageUpload />} />
         <Route path='/camera' element={<Camera />} />
+        <Route path='/keyboard' element={<Keyboard />} />
       </Routes>
     </Router>
   );
