@@ -324,3 +324,20 @@ def create_unit(request):
             'id': unit.id,
             'postal_code': unit.postal_code
         }, status=201)
+    
+@csrf_exempt
+def livelo_points(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        category = data.get('category')
+        if category == 'hardware':
+            return JsonResponse({'points': 30})
+        elif category == 'computer':
+            return JsonResponse({'points': 20})
+        elif category == 'mobile_device':
+            return JsonResponse({'points': 10})
+        else:
+            return JsonResponse({'error': 'Invalid category'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    

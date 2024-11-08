@@ -17,6 +17,9 @@ function Recieved() {
     const goBack = () => {
         navigate('/camera')
     }
+    const goForward = () => {
+        navigate('/discard')
+    }
 
     return (
         <>
@@ -29,7 +32,7 @@ function Recieved() {
                     Você confirma?
                 </p>
                 <div className={styles['button-container']}>
-                    <button className={styles['yes-button']}>Sim</button>
+                    <button className={styles['yes-button']} onClick={goForward}>Sim</button>
                     <button className={styles['no-button']} onClick={() => goBack()}>Não</button>
                 </div>
             </div>
