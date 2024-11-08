@@ -6,6 +6,8 @@ import Register from './pages/Register';
 import Camera from './pages/Camera';
 import Keyboard from './pages/Keyboard/index.js';
 import Recieved from './pages/Recieved/index.js';
+import Discard from './pages/Discard/index.js';
+import EndPage from './pages/end/index.js';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path='/camera' element={<Camera />} />
         <Route path='/keyboard' element={<Keyboard />} />
         <Route path='/recieved' element={<Recieved />} />
+        <Route path='/discard' element={<Discard/>}/>
+        <Route path='/end' element={<EndPage/>}/>
       </Routes>
     </Router>
   );
