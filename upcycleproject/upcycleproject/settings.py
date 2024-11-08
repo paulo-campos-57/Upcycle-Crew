@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'upcycleproject.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databasess
 
 DATABASES = {
     'default': {
@@ -133,7 +133,6 @@ env = environ.Env(
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-RESEND_API_KEY = env('RESEND_API_KEY')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -143,3 +142,4 @@ EMAIL_HOST_USER = 'capv2004@gmail.com'
 EMAIL_HOST_PASSWORD = 'qxeqnryfaqtstkjb'
 EMAIL_USE_TLS = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+

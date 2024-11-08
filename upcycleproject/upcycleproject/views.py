@@ -45,14 +45,14 @@ def receive_image(request, unit_id):
                 image_content = image.read()
                 labels_response = detect_labels(image_content)
                 found_type = "NONE"
-                livelo_update_points = 0  # Initialize to 0
+                livelo_update_points = 0
 
                 for label in labels_response.get('labels', []):
                     description = label.get('description', '').lower()
 
                     if description in [item.lower() for item in related_computer_strings]:
                         found_type = "computer"
-                        livelo_update_points = 20
+                        livelo_update_points = 20     
                         break
                     elif description in [item.lower() for item in related_hardware_strings]:
                         found_type = "hardware"
@@ -62,8 +62,18 @@ def receive_image(request, unit_id):
                         found_type = "mobile_device"
                         livelo_update_points = 10
                         break
+                
+                if found_type == "NONE":
+                    return JsonResponse({'error': 'Item is not an electronic'}, status=404)
 
-                item = ItemThrown.objects.create(category=found_type, client=client, unit=unit)
+                if unit.weight < livelo_update_points:
+                    return JsonResponse({'error': 'Unit does not have enough space'}, status=400)
+                
+                # Processar o item
+                item_weight = livelo_update_points
+                ItemThrown.objects.create(category=found_type, client=client, unit=unit)
+                unit.weight -= item_weight
+                unit.save()
                 client.livelo_points += livelo_update_points
                 client.save()
                 send_email(client.email, livelo_update_points)
@@ -74,6 +84,7 @@ def receive_image(request, unit_id):
             return JsonResponse({'error': 'Image or CPF not provided'}, status=400)
    
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
 
 
 @csrf_exempt    
@@ -105,8 +116,6 @@ def create_user(request):
         
         return JsonResponse({'user': {'cpf': client.cpf, 'email': client.email}})
     
-from django.core.mail import send_mail
-from django.conf import settings
 
 def send_email(email, points):
     subject = "Parabéns pela sua contribuição!"
