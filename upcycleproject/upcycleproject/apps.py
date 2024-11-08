@@ -6,9 +6,9 @@ def create_default_clients(sender, **kwargs):
     from .models import Client
 
     clients = [
-        {'cpf': '11933512431', 'email': 'user1@example.com'},
-        {'cpf': '70467564493', 'email': 'user2@example.com'},
-        {'cpf': '70367237423', 'email': 'user3@example.com'}
+        {'cpf': '50415986222', 'email': 'capv2004@gmail.com'},
+        {'cpf': '11979619840', 'email': 'gsr@cesar.school'},
+        {'cpf': '29152654613', 'email': 'paulo.m.campos6601@gmail.com'}
     ]
 
     for client_data in clients:
