@@ -5,6 +5,7 @@ import Identifier from './pages/Identifier';
 import Register from './pages/Register';
 import Camera from './pages/Camera';
 import Keyboard from './pages/Keyboard/index.js';
+import Recieved from './pages/Recieved/index.js';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/insert-cpf' element={<Keyboard />}/>
         <Route path='/camera' element={<Camera />} />
         <Route path='/keyboard' element={<Keyboard />} />
+        <Route path='/recieved' element={<Recieved />} />
       </Routes>
     </Router>
   );
