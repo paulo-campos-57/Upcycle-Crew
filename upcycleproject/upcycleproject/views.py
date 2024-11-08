@@ -85,7 +85,7 @@ def receive_image(request, unit_id):
                     return JsonResponse({'error': 'Item is not an electronic'}, status=404)
 
                 if unit.weight < livelo_update_points:
-                    send_email_bb(client.email, livelo_update_points)
+                    send_email_bb(client.email)
                     return JsonResponse({'error': 'Unit does not have enough space'}, status=400)
                 
                 # Processar o item
@@ -139,7 +139,7 @@ def create_user(request):
     
 
 def send_email_bb(email):
-    subject = "Lixeira Atingiu a Capacidade Máxima"
+    subject = "Parabéns pela sua contribuição!"
     recipient_list = [email]
     from_email = settings.EMAIL_HOST_USER  # Certifique-se de que este email está autorizado a enviar emails pelo seu servidor SMTP
 
@@ -196,7 +196,6 @@ def send_email_bb(email):
       <table class="email-container" align="center" cellpadding="0" cellspacing="0">
         <tr>
           <td class="header">
-            <center><img src="Upcycle-Crew\\upcycleproject\\upcycleproject\\static\\logo_bb.jpeg" alt="Logo da Empresa" width="50" style="display: block; border-radius: 5px;"></center>
             <h2 style="margin: 10px 0;">Lixeira Atingiu a Capacidade Máxima</h2>
           </td>
         </tr>
@@ -258,7 +257,6 @@ def send_email(email, points):
               <!-- Header Section -->
               <tr>
                 <td align="center" style="background-color: #1653fc; color: #FFDD00; padding: 20px; text-align: center;">
-                  <img src="Upcycle-Crew\\upcycleproject\\upcycleproject\\static\\logo_bb.jpeg" alt="Imagem de Cabeçalho" class="imagem-ajustada" style="width: 50px; border-radius: 5px;">
                   <h2 style="margin: 10px 0; font-size: 24px; color: #FFDD00;">Obrigado por descartar com consciência!</h2>
                 </td>
               </tr>
