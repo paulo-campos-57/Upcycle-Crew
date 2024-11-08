@@ -4,6 +4,7 @@ import ImageUpload from './pages/SendPhoto/ImageUpload';
 import Home from './pages/Home';
 import Identifier from './pages/Identifier';
 import Register from './pages/Register';
+import Camera from './pages/Camera/index.tsx';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/identifier' element={<Identifier />} />
         <Route path='/send' element={<ImageUpload />} />
+        <Route path='/camera' element={<Camera />} />
       </Routes>
     </Router>
   );
