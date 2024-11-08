@@ -27,14 +27,15 @@ Para rodar esse projeto, é necesário cumprir os seguintes requisitos:<br>
       pip install -r requirements.txt
   </dt>
   </tr>
-  <tr>- Na mesma pasta, crie um arquvo .env, e nele insira sua chave de API da Google Vision</tr><br>
+  <tr>- Na mesma pasta, crie um arquvo .env, e nele insira sua chave de API da Google Vision, sua chave de envio django e-mail, seu usuário do e-mail, etc. Para mais informações, recomendamos o video seguinte: <a href = "https://www.youtube.com/watch?v=iGPPhzhXBFg"> Acesse esse vídeo </a><br>
   <tr>- Na terminal da pasta, execute os seguintes comandos:
     <dt>
 
       python manage.py makemigrations
   </dt>
+  Agora, o migrate está feito. Você deverá ver uma mensagem de inicialização com alguns clientes criados após essa inicialização. Retenha seus nomes, pois são os primeiros 3 do banco que serão usados para os testes. Lembre-se dos seus CPFs na hora de enviar mensagens pelo front-end.
   <dt>
-
+  
       python manage.py migrate
   </dt>
   <dt>
