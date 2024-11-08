@@ -24,7 +24,7 @@ function Identifier() {
                         <button className={styles['no-button']}>Não</button>
                     </div>
                 </div>
-                <div className={styles['identifier-image']}><img src='./images/recycle.png' alt='Símbolo da reciclagem em tons de azul' /></div>
+                <div className={styles['identifier-image']}><img src='./images/recycle.png' className='w-full' alt='Símbolo da reciclagem em tons de azul' /></div>
             </div>
         </>
     );

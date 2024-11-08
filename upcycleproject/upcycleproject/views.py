@@ -37,6 +37,10 @@ def receive_image(request, unit_id):
     if request.method == 'POST':
         image = request.FILES.get('image')
         cpf = request.POST.get('cpf') 
+        print("Content-Type:", request.META.get('CONTENT_TYPE'))
+        print("POST data:", request.POST)
+        print("FILES data:", request.FILES)
+
         if image and cpf:
             try:
                 client = Client.objects.get(cpf=cpf)
@@ -64,6 +68,7 @@ def receive_image(request, unit_id):
                         break
                 
                 if found_type == "NONE":
+                    print('cai aqui')
                     return JsonResponse({'error': 'Item is not an electronic'}, status=404)
 
                 if unit.weight < livelo_update_points:
@@ -146,7 +151,8 @@ def create_unit(request):
             neighbourhood=data.get('neighbourhood'),
             street=data.get('street'),
             number=data.get('number'),
-            postal_code=data.get('postal_code')
+            postal_code=data.get('postal_code'),
+            weight=100
         )
         
         return JsonResponse({
