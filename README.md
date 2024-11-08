@@ -1,64 +1,70 @@
 # Upcycle-Crew 
-<img src="https://skillicons.dev/icons?i=python,react" /><br>
-<h3>Descrição</h3>
-Esse projeto foi desenvolvido durante o Hackaton BB, no Rec'n Play 2024. O projeto consiste num MVP de um totem de um ponto de descarte de resíduo eletrônico, que utiliza visão computacional para analisar o resíduo a ser descartado pelo usuário. Caso seja um resíduo eletrônico, a lixeira é aberta, recebe o descarte do usuário, e o retorna um agradecimento por e-mail. Caso contrário, a porta não é aberta, informa ao usuário que aquele não é um resíduo válido, e não abre a porta. 
 
-<h3>Requisitos</h3>
-Para rodar esse projeto, é necesário cumprir os seguintes requisitos:<br>
-<table>
-  <tr>- Python3</tr><br>
-  <tr>- NodeJs</tr><br>
-  <tr>- Npm</tr><br>
-  <tr>- Chave da API da Google Vision</tr>
-</table>
+![Tech Stack](https://skillicons.dev/icons?i=python,react)
 
-<h3>Execução do projeto</h3>
-<table>
-  <tr>- Inicialmente, você deve clonar o repositório em seu computador através do comando: 
-    <dt>
+### Descrição
+Esse projeto foi desenvolvido durante o Hackaton BB, no Rec'n Play 2024. O projeto consiste num MVP de um totem de um ponto de descarte de resíduo eletrônico, que utiliza visão computacional para analisar o resíduo a ser descartado pelo usuário. Caso seja um resíduo eletrônico, a lixeira é aberta, recebe o descarte do usuário, e o retorna um agradecimento por e-mail. Caso contrário, a porta não é aberta, informa ao usuário que aquele não é um resíduo válido, e não abre a porta.
 
-      git clone https://github.com/paulo-campos-57/Upcycle-Crew.git
-  </dt>
-  </tr>
-  <tr>- Quando o projeto estiver clonado, navegue para o diretório upcycleproject (onde está localizado o manage.py)</tr><br>
-  <tr>- Nessa pasta, execute o comando
-    <dt>
+[Veja o vídeo explicativo do projeto](https://www.youtube.com/embed/xHFCFc4cy6Q?si=075jgECFjIfwg5P1)
 
-      pip install -r requirements.txt
-  </dt>
-  </tr>
-  <tr>- Na mesma pasta, crie um arquvo .env, e nele insira sua chave de API da Google Vision, sua chave de envio django e-mail, seu usuário do e-mail, etc. Para mais informações, recomendamos o video seguinte: <a href = "https://www.youtube.com/watch?v=iGPPhzhXBFg"> Acesse esse vídeo </a><br>
-  <tr>- Na terminal da pasta, execute os seguintes comandos:
-    <dt>
+### Requisitos
+Para rodar esse projeto, é necessário cumprir os seguintes requisitos:
 
-      python manage.py makemigrations
-  </dt>
-  Agora, o migrate está feito. Você deverá ver uma mensagem de inicialização com alguns clientes criados após essa inicialização. Retenha seus nomes, pois são os primeiros 3 do banco que serão usados para os testes. Lembre-se dos seus CPFs na hora de enviar mensagens pelo front-end.
-  <dt>
-  
-      python manage.py migrate
-  </dt>
-  <dt>
+- Python3
+- NodeJs
+- Npm
+- Chave da API da Google Vision
 
-      python manage.py runserver
-  </dt>
-  </tr>
-  <tr>- Com isso, o servidor de BackEnd estará pronto.</tr><br>
-  <tr>- Abra um novo terminal, e navegue até a pasta upcyclefront</tr><br>
-  <tr>- Neste terminal, execute os seguintes comandos: 
-    <dt>
+### Execução do projeto
+1. Inicialmente, você deve clonar o repositório em seu computador através do comando:
 
-      npm install
-  </dt>
-  <dt>
+    ```bash
+    git clone https://github.com/paulo-campos-57/Upcycle-Crew.git
+    ```
 
-      npm start
-  </dt>
-  </tr>
-  <tr>Com isso, servidor frontend estará pronto, rodando na url localhost:3000/</tr>
-</table>
+2. Quando o projeto estiver clonado, navegue para o diretório `upcycleproject` (onde está localizado o `manage.py`).
 
-<h3>Desenvolvedores</h3>
+3. Nessa pasta, execute o comando:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Na mesma pasta, crie um arquivo `.env`, e nele insira sua chave de API da Google Vision, sua chave de envio do Django e-mail, seu usuário do e-mail, etc. Para mais informações, recomendamos o vídeo seguinte: [Acesse esse vídeo](https://www.youtube.com/watch?v=iGPPhzhXBFg)
+
+5. No terminal da pasta, execute os seguintes comandos:
+
+    ```bash
+    python manage.py makemigrations
+    ```
+
+    Agora, o migrate está feito. Você deverá ver uma mensagem de inicialização com alguns clientes criados após essa inicialização. Retenha seus nomes, pois são os primeiros 3 do banco que serão usados para os testes. Lembre-se dos seus CPFs na hora de enviar mensagens pelo front-end.
+
+    ```bash
+    python manage.py migrate
+    ```
+
+    ```bash
+    python manage.py runserver
+    ```
+
+6. Com isso, o servidor de BackEnd estará pronto.
+
+7. Abra um novo terminal, e navegue até a pasta `upcyclefront`.
+
+8. Neste terminal, execute os seguintes comandos:
+
+    ```bash
+    npm install
+    ```
+
+    ```bash
+    npm start
+    ```
+
+Com isso, o servidor frontend estará pronto, rodando na url `localhost:3000/`.
+
+### Desenvolvedores
 <table>
   <tr>
     <td align="center">
