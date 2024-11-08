@@ -22,6 +22,7 @@ class Client(models.Model):
         return self.cpf
     
 class Unit(models.Model):
+    id = models.AutoField(primary_key=True) 
     city = models.CharField(max_length=255)
     neighbourhood = models.CharField(max_length=255)
     street = models.CharField(max_length=255)

@@ -143,7 +143,7 @@ def create_unit(request):
         # Create a new Unit object with the provided data
         unit = Unit.objects.create(
             city=data.get('city'),
-            neighborhood=data.get('neighborhood'),
+            neighbourhood=data.get('neighbourhood'),
             street=data.get('street'),
             number=data.get('number'),
             postal_code=data.get('postal_code')

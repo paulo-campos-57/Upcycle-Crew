@@ -4,7 +4,7 @@ import styles from './Register.module.css';
 
 function Register() {
     const [city, setCity] = useState('');
-    const [neighborhood, setNeighborhood] = useState('');
+    const [neighbourhood, setNeighbourhood] = useState('');
     const [street, setStreet] = useState('');
     const [number, setNumber] = useState('');
     const [postalCode, setPostalCode] = useState('');
@@ -15,7 +15,7 @@ function Register() {
 
         const formData = {
             city,
-            neighborhood,
+            neighbourhood,
             street,
             number,
             postal_code: postalCode,
@@ -34,11 +34,11 @@ function Register() {
                 const data = await response.json();
                 console.log('Response:', data);
 
-                // Store the `id` in localStorage
+                
                 localStorage.setItem('unitId', data.id);
 
-                // Redirect to "/camera" after saving `id` to localStorage
-                navigate('/camera');
+                
+                navigate('/begin');
             } else {
                 console.error('Error:', response.statusText);
             }
@@ -68,8 +68,8 @@ function Register() {
                         <label>Bairro</label>
                         <input
                             type="text"
-                            value={neighborhood}
-                            onChange={(e) => setNeighborhood(e.target.value)}
+                            value={neighbourhood}
+                            onChange={(e) => setNeighbourhood(e.target.value)}
                         />
                     </div>
                     <div className={styles['form-input']}>
