@@ -1,11 +1,13 @@
-'use client';
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Camera, X, Camera as CameraIcon } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Component() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const navigate = useNavigate();
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState('');
   const [isCaptureDisabled, setIsCaptureDisabled] = useState(true);
@@ -59,6 +61,7 @@ export default function Component() {
 
           if (!cpf || !unitId) {
             setError('CPF ou unitId não encontrados no localStorage.');
+            toast.error('CPF ou unitId não encontrados no localStorage.');
             return;
           }
 
@@ -69,7 +72,6 @@ export default function Component() {
           formData.append('image', blob, 'photo.jpg');
           console.log('Tamanho do blob:', blob.size);
 
-
           try {
             const response = await fetch(url, {
               method: 'POST',
@@ -77,15 +79,23 @@ export default function Component() {
             });
 
             if (response.ok) {
+              const responseData = await response.json();
               console.log('Imagem enviada com sucesso');
+              
+              localStorage.setItem('foundType', responseData.found_type);
+
+              navigate('/recieved');
             } else {
               console.error('Falha ao enviar a imagem');
+              toast.error('O resíduo não é válido!');
             }
           } catch (error) {
             console.error('Erro ao enviar a imagem:', error);
+            toast.error('Erro ao enviar a imagem');
           }
         } else {
           console.error('Erro ao capturar a imagem.');
+          toast.error('Erro ao capturar a imagem.');
         }
       }, 'image/jpeg');
     }
@@ -99,6 +109,7 @@ export default function Component() {
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center p-4">
+      <ToastContainer />
       <div className="w-[75%] h-[95%]">
         <div className="aspect-video rounded-lg overflow-hidden border-2 border-blue-500">
           <video
