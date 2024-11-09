@@ -5,6 +5,8 @@
 ### Descrição
 Esse projeto foi desenvolvido durante o Hackaton BB, no Rec'n Play 2024. O projeto consiste num MVP de um totem de um ponto de descarte de resíduo eletrônico, que utiliza visão computacional para analisar o resíduo a ser descartado pelo usuário. Caso seja um resíduo eletrônico, a lixeira é aberta, recebe o descarte do usuário, e o retorna um agradecimento por e-mail. Caso contrário, a porta não é aberta, informa ao usuário que aquele não é um resíduo válido, e não abre a porta.
 
+Obs: todas as configurações presentes e códigos foram invalidados. para testar a app, é necessário criar novas credenciais no google vision e no SMTP
+
 [Veja o vídeo explicativo do projeto](https://www.youtube.com/embed/xHFCFc4cy6Q?si=075jgECFjIfwg5P1)
 
 ### Requisitos
